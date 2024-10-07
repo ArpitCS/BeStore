@@ -1,279 +1,184 @@
+#ifndef PRODUCTCLASS_H
+#define PRODUCTCLASS_H
+
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+// Helper function to print horizontal divider
+void printDivider(int width) {
+    cout << "+" << string(width, '-') << "+" << endl;
+}
+
+// Helper function to print a formatted line
+void printFormattedLine(const string& label, const string& value, int width) {
+    // Combine label and value, adjusting space for width
+    string line = label + ": " + value;
+    line += string(width - line.length() - 2, ' '); // Adjust spacing
+    cout << line << endl;
+}
+
+// Base Product Class
 class Product {
-    private:
-        string name;
-        double price;
-        int quantity;
-        string description;
-    public:
-        Product(string n, double p, int q, string d) {
-            name = n;
-            price = p;
-            quantity = q;
-            description = d;
-        }
+protected:
+    string name;
+    double price;
+    int quantity;
 
-        void setName(string n) {
-            name = n;
-        }
+public:
+    Product(string n, double p, int q) : name(n), price(p), quantity(q) {}
 
-        void setPrice(double p) {
-            price = p;
-        }
+    virtual void print() const = 0;
 
-        void setQuantity(int q) {
-            quantity = q;
-        }
+    string getName() const { return name; }
+    double getPrice() const { return price; }
+    int getQuantity() const { return quantity; }
 
-        void setDescription(string d) {
-            description = d;
+    void removeQuantity(int qty) {
+        if (quantity >= qty) {
+            quantity -= qty;
+        } else {
+            cout << "Insufficient stock." << endl;
         }
-
-        string getName() {
-            return name;
-        }
-
-        double getPrice() {
-            return price;
-        }
-
-        int getQuantity() {
-            return quantity;
-        }
-
-        string getDescription() {
-            return description;
-        }
-
-        void print() {
-            cout << "\tName: " << name << endl;
-            cout << "\tPrice: " << price << endl;
-            cout << "\tQuantity: " << quantity << endl;
-            cout << "\tDescription: " << description << endl;
-        }
-
-        void addQuantity(int q) {
-            quantity += q;
-        }
-
-        void removeQuantity(int q) {
-            quantity -= q;
-        }
-
-        void display() {
-            cout << "*-------------------------------------------------*" << endl;    
-            cout << "\tName: " << name << endl;
-            cout << "\tPrice: " << price << endl;
-            cout << "\tQuantity: " << quantity << endl;
-            cout << "*-------------------------------------------------*" << endl;    
-        }
+    }
 };
 
+// Book Class
 class Book : public Product {
-    private:
-        string author;
-        string genre;
-    public:
-        Book(string n, double p, int q, string d, string a, string g) : Product(n, p, q, d) {
-            author = a;
-            genre = g;
-        }
+    string publicationYear;
+    string author;
+    string genre;
 
-        void setAuthor(string a) {
-            author = a;
-        }
+public:
+    Book(string n, double p, int q, string pubYear, string auth, string gen)
+        : Product(n, p, q), publicationYear(pubYear), author(auth), genre(gen) {}
 
-        void setGenre(string g) {
-            genre = g;
-        }
-
-        string getAuthor() {
-            return author;
-        }
-
-        string getGenre() {
-            return genre;
-        }
-
-        void print() {
-            cout << "*-------------------------------------------------*" << endl;    
-            Product::print();
-            cout << "\tAuthor: " << author << endl;
-            cout << "\tGenre: " << genre << endl;
-            cout << "*-------------------------------------------------*" << endl;    
-        }
+    void print() const override {
+        int width = 50;  // Set width for card-like appearance
+        printDivider(width);
+        printFormattedLine("Book", name, width);
+        printFormattedLine("Author", author, width);
+        printFormattedLine("Publication Year", publicationYear, width);
+        printFormattedLine("Genre", genre, width);
+        printFormattedLine("Price", "$" + to_string(price), width);
+        printFormattedLine("Quantity", to_string(quantity), width);
+        printDivider(width);
+    }
 };
 
+// Movie Class
 class Movie : public Product {
-    private:
-        string director;
-        string rating;
-    public:
-        Movie(string n, double p, int q, string d, string di, string r) : Product(n, p, q, d) {
-            director = di;
-            rating = r;
-        }
+    string releaseYear;
+    string director;
+    string rating;
 
-        void setDirector(string di) {
-            director = di;
-        }
+public:
+    Movie(string n, double p, int q, string rYear, string dir, string rat)
+        : Product(n, p, q), releaseYear(rYear), director(dir), rating(rat) {}
 
-        void setRating(string r) {
-            rating = r;
-        }
-
-        string getDirector() {
-            return director;
-        }
-
-        string getRating() {
-            return rating;
-        }
-
-        void print() {
-            cout << "*-------------------------------------------------*" << endl;    
-            Product::print();
-            cout << "\tDirector: " << director << endl;
-            cout << "\tRating: " << rating << endl;
-            cout << "*-------------------------------------------------*" << endl;
-        }
+    void print() const override {
+        int width = 50;
+        printDivider(width);
+        printFormattedLine("Movie", name, width);
+        printFormattedLine("Director", director, width);
+        printFormattedLine("Release Year", releaseYear, width);
+        printFormattedLine("Rating", rating, width);
+        printFormattedLine("Price", "$" + to_string(price), width);
+        printFormattedLine("Quantity", to_string(quantity), width);
+        printDivider(width);
+    }
 };
 
+// Software Class
 class Software : public Product {
-    private:
-        string platform;
-        string version;
-    public:
-        Software(string n, double p, int q, string d, string pl, string v) : Product(n, p, q, d) {
-            platform = pl;
-            version = v;
-        }
+    string releaseYear;
+    string platform;
+    string version;
 
-        void setPlatform(string pl) {
-            platform = pl;
-        }
+public:
+    Software(string n, double p, int q, string rYear, string plat, string ver)
+        : Product(n, p, q), releaseYear(rYear), platform(plat), version(ver) {}
 
-        void setVersion(string v) {
-            version = v;
-        }
-
-        string getPlatform() {
-            return platform;
-        }
-
-        string getVersion() {
-            return version;
-        }
-
-        void print() {
-            cout << "*-------------------------------------------------*" << endl;    
-            Product::print();
-            cout << "\tPlatform: " << platform << endl;
-            cout << "\tVersion: " << version << endl;
-            cout << "*-------------------------------------------------*" << endl;    
-        }
+    void print() const override {
+        int width = 50;
+        printDivider(width);
+        printFormattedLine("Software", name, width);
+        printFormattedLine("Version", version, width);
+        printFormattedLine("Platform", platform, width);
+        printFormattedLine("Release Year", releaseYear, width);
+        printFormattedLine("Price", "$" + to_string(price), width);
+        printFormattedLine("Quantity", to_string(quantity), width);
+        printDivider(width);
+    }
 };
 
+// Electronics Class
 class Electronics : public Product {
-    private:
-        string brand;
-        string model;
-    public:
-        Electronics(string n, double p, int q, string d, string b, string m) : Product(n, p, q, d) {
-            brand = b;
-            model = m;
-        }
+    string model;
+    string brand;
+    string series;
 
-        void setBrand(string b) {
-            brand = b;
-        }
+public:
+    Electronics(string n, double p, int q, string mod, string br, string ser)
+        : Product(n, p, q), model(mod), brand(br), series(ser) {}
 
-        void setModel(string m) {
-            model = m;
-        }
-
-        string getBrand() {
-            return brand;
-        }
-
-        string getModel() {
-            return model;
-        }
-
-        void print() {
-            cout << "*-------------------------------------------------*" << endl;    
-            Product::print();
-            cout << "\tBrand: " << brand << endl;
-            cout << "\tModel: " << model << endl;
-            cout << "*-------------------------------------------------*" << endl;    
-        }
+    void print() const override {
+        int width = 50;
+        printDivider(width);
+        printFormattedLine("Electronics", name, width);
+        printFormattedLine("Model", model, width);
+        printFormattedLine("Brand", brand, width);
+        printFormattedLine("Series", series, width);
+        printFormattedLine("Price", "$" + to_string(price), width);
+        printFormattedLine("Quantity", to_string(quantity), width);
+        printDivider(width);
+    }
 };
 
+// Music Class
 class Music : public Product {
-    private:
-        string artist;
-        string album;
-    public:
-        Music(string n, double p, int q, string d, string ar, string al) : Product(n, p, q, d) {
-            artist = ar;
-            album = al;
-        }
+    string album;
+    string artist;
+    string label;
 
-        void setArtist(string ar) {
-            artist = ar;
-        }
+public:
+    Music(string n, double p, int q, string alb, string art, string lab)
+        : Product(n, p, q), album(alb), artist(art), label(lab) {}
 
-        void setAlbum(string al) {
-            album = al;
-        }
-
-        string getArtist() {
-            return artist;
-        }
-
-        string getAlbum() {
-            return album;
-        }
-
-        void print() {
-            cout << "*-------------------------------------------------*" << endl;    
-            Product::print();
-            cout << "\tArtist: " << artist << endl;
-            cout << "\tAlbum: " << album << endl;
-            cout << "*-------------------------------------------------*" << endl;    
-        }
+    void print() const override {
+        int width = 50;
+        printDivider(width);
+        printFormattedLine("Music Album", album, width);
+        printFormattedLine("Artist", artist, width);
+        printFormattedLine("Label", label, width);
+        printFormattedLine("Price", "$" + to_string(price), width);
+        printFormattedLine("Quantity", to_string(quantity), width);
+        printDivider(width);
+    }
 };
 
+// Clothing Class
 class Clothing : public Product {
-    private:
-        string size;
-        string color;
-    public:
-        Clothing(string n, double p, int q, string d, string s, string c) : Product(n, p, q, d) {
-            size = s;
-            color = c;
-        }
+    string color;
+    string size;
+    string material;
 
-        void setSize(string s) {
-            size = s;
-        }
+public:
+    Clothing(string n, double p, int q, string col, string sz, string mat)
+        : Product(n, p, q), color(col), size(sz), material(mat) {}
 
-        void setColor(string c) {
-            color = c;
-        }
-
-        string getSize() {
-            return size;
-        }
-
-        string getColor() {
-            return color;
-        }
-
-        void print() {
-            cout << "*-------------------------------------------------*" << endl;
-            Product::print();
-            cout << "\tSize: " << size << endl;
-            cout << "\tColor: " << color << endl;
-            cout << "*-------------------------------------------------*" << endl;    
-        }
+    void print() const override {
+        int width = 50;
+        printDivider(width);
+        printFormattedLine("Clothing", name, width);
+        printFormattedLine("Color", color, width);
+        printFormattedLine("Size", size, width);
+        printFormattedLine("Material", material, width);
+        printFormattedLine("Price", "$" + to_string(price), width);
+        printFormattedLine("Quantity", to_string(quantity), width);
+        printDivider(width);
+    }
 };
+
+#endif

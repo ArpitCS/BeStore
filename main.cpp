@@ -1,128 +1,117 @@
 #include <iostream>
 #include <string>
-#include <cstring>
+#include "productClass.h"
+#include "cartClass.h"
+#include "orderClass.h"
+#include "paymentClass.h"
 
 using namespace std;
 
-#include "productClass.h" 
-#include "cartClass.h" 
-#include "orderClass.h" 
-/*
-Product Types:
-    1. Book -> Author, Genre
-    2. Movie -> Director, Rating
-    3. Software -> Platform, Version
-    4. Electronics -> Brand, Model
-    5. Music -> Artist, Album
-    6. Clothing -> Size, Color
-*/
-
-void printCategory(Book *b, int totalBooks) {
-    cout << "Books:" << endl;
-    for (int i = 0; i < totalBooks; i++) {
-        b[i].print();
-    }
-}
-
-void printCategory(Movie *m, int totalMovies) {
-    cout << "Movies:" << endl;
-    for (int i = 0; i < totalMovies; i++) {
-        m[i].print();
-    }
-}
-
-void printCategory(Software *s, int totalSoftwares) {
-    cout << "Softwares:" << endl;
-    for (int i = 0; i < totalSoftwares; i++) {
-        s[i].print();
-    }
-}
-
-void printCategory(Electronics *e, int totalElectronics) {
-    cout << "Electronics:" << endl;
-    for (int i = 0; i < totalElectronics; i++) {
-        e[i].print();
-    }
-}
-
-void printCategory(Music *m, int totalMusic) {
-    cout << "Music:" << endl;
-    for (int i = 0; i < totalMusic; i++) {
-        m[i].print();
-    }
-}
-
-void printCategory(Clothing *c, int totalClothing) {
-    cout << "Clothing:" << endl;
-    for (int i = 0; i < totalClothing; i++) {
-        c[i].print();
-    }
-}
+const int PRODUCT_COUNT = 18;
 
 int main() {
-    
-    // Products
-    Book books[] = {
-        Book("The Great Gatsby", 12.99, 10, "1925", "F. Scott Fitzgerald", "Fiction"),
-        Book("To Kill a Mockingbird", 9.99, 15, "1960", "Harper Lee", "Fiction"),
-        Book("1984", 10.99, 20, "1949", "George Orwell", "Dystopian"),
-        Book("The Catcher in the Rye", 11.99, 25, "1951", "J.D. Salinger", "Fiction"),
-        Book("The Hobbit", 13.99, 30, "1937", "J.R.R. Tolkien", "Fantasy")
-    };
-    int totalBooks = sizeof(books) / sizeof(books[0]);
+    // Create products using normal arrays
+    Product* products[PRODUCT_COUNT] = {
+        new Book("The Great Gatsby", 12.99, 10, "1925", "F. Scott Fitzgerald", "Fiction"),
+        new Book("To Kill a Mockingbird", 9.99, 10, "1960", "Harper Lee", "Fiction"),
+        new Book("1984", 10.99, 10, "1949", "George Orwell", "Dystopian"),
 
-    Movie movies[] = {
-        Movie("The Shawshank Redemption", 14.99, 10, "1994", "Frank Darabont", "R"),
-        Movie("The Godfather", 15.99, 15, "1972", "Francis Ford Coppola", "R"),
-        Movie("The Dark Knight", 16.99, 20, "2008", "Christopher Nolan", "PG-13"),
-        Movie("Pulp Fiction", 17.99, 25, "1994", "Quentin Tarantino", "R"),
-        Movie("The Lord of the Rings: The Return of the King", 18.99, 30, "2003", "Peter Jackson", "PG-13")
-    };
-    int totalMovies = sizeof(movies) / sizeof(movies[0]);
+        new Movie("The Godfather", 15.99, 15, "1972", "Francis Ford Coppola", "R"),
+        new Movie("The Shawshank Redemption", 14.99, 15, "1994", "Frank Darabont", "R"),
+        new Movie("The Dark Knight", 17.99, 15, "2008", "Christopher Nolan", "PG-13"),
 
-    Software softwares[] = {
-        Software("Windows 10", 119.99, 10, "2015", "PC", "10"),
-        Software("macOS Big Sur", 129.99, 15, "2020", "Mac", "11"),
-        Software("Ubuntu 20.04", 139.99, 20, "2020", "Linux", "20.04"),
-        Software("iOS 14", 149.99, 25, "2020", "iPhone", "14"),
-        Software("Android 11", 159.99, 30, "2020", "Android", "11")
-    };
-    int totalSoftwares = sizeof(softwares) / sizeof(softwares[0]);
+        new Software("Windows 10", 119.99, 10, "2015", "PC", "10"),
+        new Software("Microsoft Office", 149.99, 10, "2019", "PC", "2019"),
+        new Software("Adobe Photoshop", 199.99, 10, "2020", "PC", "2020"),
 
-    Electronics electronics[] = {
-        Electronics("Apple iPhone 12", 799.99, 10, "iPhone 12", "Apple", "iPhone 12"),
-        Electronics("Samsung Galaxy S21", 899.99, 15, "Galaxy S21", "Samsung", "Galaxy S21"),
-        Electronics("Dell XPS 13", 999.99, 20, "XPS 13", "Dell", "XPS 13"),
-        Electronics("HP Spectre x360", 1099.99, 25, "Spectre x360", "HP", "Spectre x360"),
-        Electronics("Lenovo ThinkPad x1 Carbon", 1199.99, 30, "ThinkPad X1 Carbon", "Lenovo", "ThinkPad X1 Carbon")
-    };
-    int totalElectronics = sizeof(electronics) / sizeof(electronics[0]);
+        new Electronics("Apple iPhone 12", 799.99, 10, "iPhone 12", "Apple", "iPhone 12"),
+        new Electronics("Samsung Galaxy S21", 899.99, 10, "Galaxy S21", "Samsung", "Galaxy S21"),
+        new Electronics("Sony PlayStation 5", 499.99, 10, "PlayStation 5", "Sony", "PlayStation 5"),
+ 
+        new Music("Abbey Road", 9.99, 10, "Abbey Road", "The Beatles", "Abbey Road"),
+        new Music("Thriller", 8.99, 10, "Thriller", "Michael Jackson", "Thriller"),
+        new Music("Back in Black", 7.99, 10, "Back in Black", "AC/DC", "Back in Black"),
 
-    Music music[] = {
-        Music("Abbey Road", 9.99, 10, "Abbey Road", "The Beatles", "Abbey Road"),
-        Music("Thriller", 10.99, 15, "Thriller", "Michael Jackson", "Thriller"),
-        Music("Goodbye Yellow Brick Road", 11.99, 20, "Goodbye Yellow Brick Road", "Elton John", "Goodbye Yellow Brick Road"),
-        Music("A Night at the Opera", 12.99, 25, "A Night at the Opera", "Queen", "A Night at the Opera"),
-        Music("Led Zeppelin IV", 13.99, 30, "Led Zeppelin IV", "Led Zeppelin", "Led Zeppelin IV")
+        new Clothing("Shirt", 19.99, 10, "Black", "S", "Black"),
+        new Clothing("Jeans", 29.99, 10, "Blue", "M", "Denim"),
+        new Clothing("Sweater", 39.99, 10, "Red", "L", "Wool")
     };
-    int totalMusic = sizeof(music) / sizeof(music[0]);
 
-    Clothing clothing[] = {
-        Clothing("Shirt", 19.99, 10, "Black", "S", "Black"),
-        Clothing("T-Shirt", 20.99, 15, "White", "M", "White"),
-        Clothing("Trousers", 21.99, 20, "Blue", "L", "Blue"),
-        Clothing("Oversized T-Shirt", 22.99, 25, "Red", "XL", "Red"),
-        Clothing("Jacket", 23.99, 30, "Green", "XXL", "Green")
-    };
-    int totalClothing = sizeof(clothing) / sizeof(clothing[0]);
+    Cart cart;
+    int choice;
 
-    // Print Products
-    printCategory(books, totalBooks);
-    printCategory(movies, totalMovies);
-    printCategory(softwares, totalSoftwares);
-    printCategory(electronics, totalElectronics);
-    printCategory(music, totalMusic);
-    printCategory(clothing, totalClothing);
+    do {
+        cout << "\n--- Welcome to the Online Store ---\n";
+        cout << "1. Browse Products\n2. View Cart\n3. Checkout\n4. Exit\n";
+        cout << "Choose an option: ";
+        cin >> choice;
+
+        switch (choice) {
+            case 1: {
+                // Display products and allow user to add to cart
+                cout << "\nAvailable Products:\n";
+                for (int i = 0; i < PRODUCT_COUNT; i++) {
+                    // cout << i+1 << ". ";
+                    products[i]->print();
+                }
+
+                int prodChoice, quantity;
+                cout << "Enter the product number to add to cart or 0 to go back: ";
+                cin >> prodChoice;
+
+                if (prodChoice > 0 && prodChoice <= PRODUCT_COUNT) {
+                    cout << "Enter quantity: ";
+                    cin >> quantity;
+                    cart.addProduct(products[prodChoice - 1], quantity);
+                }
+                break;
+            }
+
+            case 2:
+                // Display cart
+                cart.displayCart();
+                break;
+
+            case 3: {
+                // Checkout and choose payment method
+                if(cart.isEmpty()) {
+                    cout << "Your cart is empty!\n";
+                    break;
+                }
+
+                string paymentMethod;
+                cout << "\nChoose payment method (CreditCard/PayPal): ";
+                cin >> paymentMethod;
+
+                Payment* payment = nullptr;
+                if (paymentMethod == "CreditCard") {
+                    payment = new CreditCardPayment();
+                } else if (paymentMethod == "PayPal") {
+                    payment = new PayPalPayment();
+                }
+
+                if (payment) {
+                    cart.checkout(payment);
+                    delete payment;
+                } else {
+                    cout << "Invalid payment method selected.\n";
+                }
+                break;
+            }
+
+            case 4:
+                cout << "Thank you for shopping!\n";
+                break;
+
+            default:
+                cout << "Invalid choice. Try again.\n";
+        }
+    } while (choice != 4);
+
+    // Cleanup dynamically allocated memory
+    for (int i = 0; i < PRODUCT_COUNT; i++) {
+        delete products[i];
+    }
 
     return 0;
 }
