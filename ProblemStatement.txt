@@ -1,0 +1,37 @@
+(#) 'ONLINE STORE APPLICATION' (#)
+
+# Project Goal:
+    Create an online store application that allows users to browse products, add to cart, checkout and manage orders.
+
+# Required Concepts
+    Classes
+        -> Product: Represents a product with attributes like name, price, quantity and description.
+        -> Cart: Represents a shopping cart with methods to add, remove and view products.
+        -> Order: Represents an order with attributes like orderID, customer information and products.
+    
+    Data Structures
+        Use arrays or files to store products in the catalog and cart
+    
+    Inheritance
+        Create derived class for different product types (Eg. Book, Electronics) to add specific attributes or methods
+
+    Polymorphism
+        Use Polymorphism to handle different payment methods (Eg. CreditCardPayment, PayPalPayment) through a base Payment Class.
+
+    Exception Handling
+        Implement Exception handling to catch errors like invalid input, out-of-stock products, or payment processing failures.
+
+# Rubrics
+    => Functionality: The application should allow users to browse products, add to cart, checkout, and view order history
+
+    => Data Structures: Use arrays / files to store products and orders
+
+    => Object-Oriented Design: Use classes and objects to model the application's entries
+
+    => Inheritance and Polymorphism: Implement Inheritance and Polymorphism for product types and payment methods
+
+    => Error Handling: Handle potential errors gracefully using exceptions
+
+    => User Interface: Provide a user-friendly interface for interacting with the application
+
+    => Efficiency: Optimize the application for performance, especially when dealing with large product catalogs and many orders.
