@@ -1,34 +1,36 @@
-#ifndef ORDERCLASS_H
-#define ORDERCLASS_H
-
 #include <iostream>
-#include "productClass.h"
-
-const int MAX_ORDER_ITEMS = 10;
+#include "productClass.h" // Include the Product class header
 
 class Order {
-    int orderID;
-    Product* orderItems[MAX_ORDER_ITEMS];
-    int itemCount;
+private:
+    Product* orderItems[10]; // Fixed size array for order items
+    int itemCount; // To keep track of how many items are in the order
+    int quantities[10]; // Array to store quantities of each product
 
 public:
-    Order(int id) : orderID(id), itemCount(0) {}
+    Order() : itemCount(0) {} // Initialize itemCount to 0
 
-    void addProductToOrder(Product* product) {
-        if (itemCount < MAX_ORDER_ITEMS) {
-            orderItems[itemCount] = product;
-            itemCount++;
+    void displayOrder() const {
+        if (itemCount == 0) { // Check if the order is empty
+            std::cout << "Your order is empty." << std::endl;
+            return;
+        }
+
+        for (int i = 0; i < itemCount; ++i) { // Use itemCount instead of orderItems.size()
+            orderItems[i]->print(i); // Pass the index to print()
+            std::cout << "Quantity: " << quantities[i] << std::endl; // Output the quantity
+        }
+    }
+
+    void addItem(Product* product, int quantity) {
+        if (itemCount < 10) {
+            orderItems[itemCount] = product; // Add product
+            quantities[itemCount] = quantity; // Set quantity
+            itemCount++; // Increment itemCount
         } else {
-            cout << "Order has too many items.\n";
+            std::cout << "Order is full!" << std::endl;
         }
     }
 
-    void displayOrder() {
-        cout << "\nOrder ID: " << orderID << endl;
-        for (int i = 0; i < itemCount; i++) {
-            orderItems[i]->print();
-        }
-    }
+    // Additional functions can be added as needed (e.g., removeItem, clearOrder)
 };
-
-#endif

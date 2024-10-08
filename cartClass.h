@@ -1,70 +1,43 @@
-#ifndef CARTCLASS_H
-#define CARTCLASS_H
-
 #include <iostream>
-#include "productClass.h"
-#include "paymentClass.h"
-
-const int MAX_CART_ITEMS = 10;
+#include "productClass.h" // Include the Product class header
+#include "paymentClass.h" // Include the Payment class header
 
 class Cart {
-    Product* cartItems[MAX_CART_ITEMS];
-    int quantities[MAX_CART_ITEMS];
-    int itemCount;
+private:
+    Product* cartItems[10]; // Fixed size array for cart items
+    int itemCount; // To keep track of how many items are in the cart
 
 public:
-    Cart() : itemCount(0) {}
+    Cart() : itemCount(0) {} // Initialize itemCount to 0
 
-    void addProduct(Product* product, int quantity) {
-        if (product->getQuantity() >= quantity) {
-            if (itemCount < MAX_CART_ITEMS) {
-                cartItems[itemCount] = product;
-                quantities[itemCount] = quantity;
-                itemCount++;
-                product->removeQuantity(quantity);
-                cout << quantity << " " << product->getName() << "(s) added to cart.\n";
-            } else {
-                cout << "Cart is full!\n";
-            }
-        } else {
-            cout << "Sorry, not enough stock available.\n";
-        }
-    }
-
-    void displayCart() {
-        if (itemCount == 0) {
-            cout << "Your cart is empty!\n";
+    void displayCart() const {
+        if (itemCount == 0) { // Check if the cart is empty
+            std::cout << "Your cart is empty." << std::endl;
             return;
         }
 
-        cout << "\n--- Your Cart ---\n";
-        double total = 0;
-        for (int i = 0; i < itemCount; i++) {
-            cartItems[i]->print();
-            cout << "Quantity: " << quantities[i] << endl;
-            total += cartItems[i]->getPrice() * quantities[i];
+        for (int i = 0; i < itemCount; ++i) { // Use itemCount instead of cartItems.size()
+            cartItems[i]->print(i); // Pass the index to print()
         }
-        cout << "\nTotal: $" << total << endl;
     }
 
-    bool isEmpty() {
-        return itemCount == 0;
+    void addProduct(Product* product, int quantity) {
+        if (itemCount < 10) {
+            cartItems[itemCount++] = product; // Add product and increment count
+            std::cout << "Added " << quantity << " of product " << product->getName() << " to cart." << std::endl;
+        } else {
+            std::cout << "Cart is full!" << std::endl;
+        }
+    }
+
+    bool isEmpty() const {
+        return itemCount == 0; // Check if the cart is empty
     }
 
     void checkout(Payment* payment) {
-        double total = 0;
-        for (int i = 0; i < itemCount; i++) {
-            total += cartItems[i]->getPrice() * quantities[i];
-        }
-
-        try {
-            payment->processPayment(total);
-            cout << "Checkout successful! Your order is complete.\n";
-            itemCount = 0;  // Clear the cart after checkout
-        } catch (const char* errMsg) {
-            cout << errMsg << endl;
-        }
+        // Implement checkout logic (e.g., payment processing)
+        std::cout << "Proceeding to checkout with payment: " << payment << std::endl;
     }
-};
 
-#endif
+    // Additional functions can be added as needed (e.g., removeItem, clearCart)
+};

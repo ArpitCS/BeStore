@@ -13,9 +13,8 @@ void printDivider(int width) {
 
 // Helper function to print a formatted line
 void printFormattedLine(const string& label, const string& value, int width) {
-    // Combine label and value, adjusting space for width
     string line = label + ": " + value;
-    line += string(width - line.length() - 2, ' '); // Adjust spacing
+    line += string(width - line.length() - 2, ' ');
     cout << line << endl;
 }
 
@@ -29,7 +28,7 @@ protected:
 public:
     Product(string n, double p, int q) : name(n), price(p), quantity(q) {}
 
-    virtual void print() const = 0;
+    virtual void print(int productNumber) const = 0;
 
     string getName() const { return name; }
     double getPrice() const { return price; }
@@ -54,9 +53,11 @@ public:
     Book(string n, double p, int q, string pubYear, string auth, string gen)
         : Product(n, p, q), publicationYear(pubYear), author(auth), genre(gen) {}
 
-    void print() const override {
-        int width = 50;  // Set width for card-like appearance
+    void print(int productNumber) const override {
+        string tempNumber = "[" + to_string(productNumber) + "]";
+        int width = 50;
         printDivider(width);
+        printFormattedLine("Product Number", tempNumber, width);
         printFormattedLine("Book", name, width);
         printFormattedLine("Author", author, width);
         printFormattedLine("Publication Year", publicationYear, width);
@@ -77,9 +78,11 @@ public:
     Movie(string n, double p, int q, string rYear, string dir, string rat)
         : Product(n, p, q), releaseYear(rYear), director(dir), rating(rat) {}
 
-    void print() const override {
+    void print(int productNumber) const override {
+        string tempNumber = "[" + to_string(productNumber) + "]";
         int width = 50;
         printDivider(width);
+        printFormattedLine("Product Number", tempNumber, width);
         printFormattedLine("Movie", name, width);
         printFormattedLine("Director", director, width);
         printFormattedLine("Release Year", releaseYear, width);
@@ -100,9 +103,11 @@ public:
     Software(string n, double p, int q, string rYear, string plat, string ver)
         : Product(n, p, q), releaseYear(rYear), platform(plat), version(ver) {}
 
-    void print() const override {
+    void print(int productNumber) const override {
+        string tempNumber = "[" + to_string(productNumber) + "]";
         int width = 50;
         printDivider(width);
+        printFormattedLine("Product Number", tempNumber, width);
         printFormattedLine("Software", name, width);
         printFormattedLine("Version", version, width);
         printFormattedLine("Platform", platform, width);
@@ -117,19 +122,21 @@ public:
 class Electronics : public Product {
     string model;
     string brand;
-    string series;
+    string specs;
 
 public:
-    Electronics(string n, double p, int q, string mod, string br, string ser)
-        : Product(n, p, q), model(mod), brand(br), series(ser) {}
+    Electronics(string n, double p, int q, string mod, string br, string sp)
+        : Product(n, p, q), model(mod), brand(br), specs(sp) {}
 
-    void print() const override {
+    void print(int productNumber) const override {
+        string tempNumber = "[" + to_string(productNumber) + "]";
         int width = 50;
         printDivider(width);
+        printFormattedLine("Product Number", tempNumber, width);
         printFormattedLine("Electronics", name, width);
-        printFormattedLine("Model", model, width);
         printFormattedLine("Brand", brand, width);
-        printFormattedLine("Series", series, width);
+        printFormattedLine("Model", model, width);
+        printFormattedLine("Specs", specs, width);
         printFormattedLine("Price", "$" + to_string(price), width);
         printFormattedLine("Quantity", to_string(quantity), width);
         printDivider(width);
@@ -138,20 +145,23 @@ public:
 
 // Music Class
 class Music : public Product {
-    string album;
+    string albumName;
     string artist;
-    string label;
+    string genre;
 
 public:
-    Music(string n, double p, int q, string alb, string art, string lab)
-        : Product(n, p, q), album(alb), artist(art), label(lab) {}
+    Music(string n, double p, int q, string alb, string art, string gen)
+        : Product(n, p, q), albumName(alb), artist(art), genre(gen) {}
 
-    void print() const override {
+    void print(int productNumber) const override {
+        string tempNumber = "[" + to_string(productNumber) + "]";
         int width = 50;
         printDivider(width);
-        printFormattedLine("Music Album", album, width);
+        printFormattedLine("Product Number", tempNumber, width);
+        printFormattedLine("Music Album", name, width);
         printFormattedLine("Artist", artist, width);
-        printFormattedLine("Label", label, width);
+        printFormattedLine("Album", albumName, width);
+        printFormattedLine("Genre", genre, width);
         printFormattedLine("Price", "$" + to_string(price), width);
         printFormattedLine("Quantity", to_string(quantity), width);
         printDivider(width);
@@ -168,9 +178,12 @@ public:
     Clothing(string n, double p, int q, string col, string sz, string mat)
         : Product(n, p, q), color(col), size(sz), material(mat) {}
 
-    void print() const override {
+    void print(int productNumber) const override {
+        string tempNumber = "[" + to_string(productNumber) + "]";
+
         int width = 50;
         printDivider(width);
+        printFormattedLine("Product Number", tempNumber, width);
         printFormattedLine("Clothing", name, width);
         printFormattedLine("Color", color, width);
         printFormattedLine("Size", size, width);
