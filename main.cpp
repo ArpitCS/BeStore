@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <fstream>
 #include "productClass.h"
 #include "cartClass.h"
 #include "orderClass.h"
@@ -8,6 +9,21 @@
 using namespace std;
 
 const int PRODUCT_COUNT = 18;
+
+// Function to view order history from the order_history.csv file
+void viewOrderHistory() {
+    ifstream file("order_history.csv");
+    if (file.is_open()) {
+        string line;
+        cout << "\n--- Order History ---\n";
+        while (getline(file, line)) {
+            cout << line << endl;
+        }
+        file.close();
+    } else {
+        cout << "No order history found.\n";
+    }
+}
 
 int main() {
     // Create products using normal arrays
@@ -27,7 +43,7 @@ int main() {
         new Electronics("Apple iPhone 12", 799.99, 10, "iPhone 12", "Apple", "iPhone 12"),
         new Electronics("Samsung Galaxy S21", 899.99, 10, "Galaxy S21", "Samsung", "Galaxy S21"),
         new Electronics("Sony PlayStation 5", 499.99, 10, "PlayStation 5", "Sony", "PlayStation 5"),
- 
+
         new Music("Abbey Road", 9.99, 10, "Abbey Road", "The Beatles", "Abbey Road"),
         new Music("Thriller", 8.99, 10, "Thriller", "Michael Jackson", "Thriller"),
         new Music("Back in Black", 7.99, 10, "Back in Black", "AC/DC", "Back in Black"),
@@ -41,8 +57,9 @@ int main() {
     int choice;
 
     do {
+        // Main menu
         cout << "\n--- Welcome to the Online Store ---\n";
-        cout << "1. Browse Products\n2. View Cart\n3. Checkout\n4. Exit\n";
+        cout << "1. Browse Products\n2. View Cart\n3. Checkout\n4. View Order History\n5. Exit\n";
         cout << "Choose an option: ";
         cin >> choice;
 
@@ -51,8 +68,7 @@ int main() {
                 // Display products and allow user to add to cart
                 cout << "\nAvailable Products:\n";
                 for (int i = 0; i < PRODUCT_COUNT; i++) {
-                    // cout << i+1 << ". ";
-                    products[i]->print();
+                    products[i]->print(i + 1);  // Pass product number
                 }
 
                 int prodChoice, quantity;
@@ -74,7 +90,7 @@ int main() {
 
             case 3: {
                 // Checkout and choose payment method
-                if(cart.isEmpty()) {
+                if (cart.isEmpty()) {
                     cout << "Your cart is empty!\n";
                     break;
                 }
@@ -100,13 +116,18 @@ int main() {
             }
 
             case 4:
+                // View order history
+                viewOrderHistory();
+                break;
+
+            case 5:
                 cout << "Thank you for shopping!\n";
                 break;
 
             default:
                 cout << "Invalid choice. Try again.\n";
         }
-    } while (choice != 4);
+    } while (choice != 5);
 
     // Cleanup dynamically allocated memory
     for (int i = 0; i < PRODUCT_COUNT; i++) {
