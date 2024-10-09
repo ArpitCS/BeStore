@@ -6,13 +6,14 @@
 
 using namespace std;
 
-// Helper function to print horizontal divider
-void printDivider(int width) {
+void printDivider(int width)
+{
     cout << "+" << string(width, '-') << "+" << endl;
 }
 
 // Base Product Class
-class Product {
+class Product
+{
 protected:
     string name;
     double price;
@@ -27,15 +28,20 @@ public:
     double getPrice() const { return price; }
     int getQuantity() const { return quantity; }
 
-    void removeQuantity(int qty) {
-        if (quantity >= qty) {
+    void removeQuantity(int qty)
+    {
+        if (quantity >= qty)
+        {
             quantity -= qty;
-        } else {
+        }
+        else
+        {
             cout << "Insufficient stock." << endl;
         }
     }
 
-    void printCart(int productNumber, int amt) const {
+    void printCart(int productNumber, int amt) const
+    {
         string tempNumber = "[" + to_string(productNumber) + "]";
         int width = 50;
         printDivider(width);
@@ -49,7 +55,8 @@ public:
 };
 
 // Book Class
-class Book : public Product {
+class Book : public Product
+{
     string publicationYear;
     string author;
     string genre;
@@ -58,7 +65,8 @@ public:
     Book(string n, double p, int q, string pubYear, string auth, string gen)
         : Product(n, p, q), publicationYear(pubYear), author(auth), genre(gen) {}
 
-    void print(int productNumber) const override {
+    void print(int productNumber) const override
+    {
         string tempNumber = "[" + to_string(productNumber) + "]";
         int width = 50;
         printDivider(width);
@@ -74,7 +82,8 @@ public:
 };
 
 // Movie Class
-class Movie : public Product {
+class Movie : public Product
+{
     string releaseYear;
     string director;
     string rating;
@@ -83,7 +92,8 @@ public:
     Movie(string n, double p, int q, string rYear, string dir, string rat)
         : Product(n, p, q), releaseYear(rYear), director(dir), rating(rat) {}
 
-    void print(int productNumber) const override {
+    void print(int productNumber) const override
+    {
         string tempNumber = "[" + to_string(productNumber) + "]";
         int width = 50;
         printDivider(width);
@@ -99,7 +109,8 @@ public:
 };
 
 // Software Class
-class Software : public Product {
+class Software : public Product
+{
     string releaseYear;
     string platform;
     string version;
@@ -108,7 +119,8 @@ public:
     Software(string n, double p, int q, string rYear, string plat, string ver)
         : Product(n, p, q), releaseYear(rYear), platform(plat), version(ver) {}
 
-    void print(int productNumber) const override {
+    void print(int productNumber) const override
+    {
         string tempNumber = "[" + to_string(productNumber) + "]";
         int width = 50;
         printDivider(width);
@@ -124,7 +136,8 @@ public:
 };
 
 // Electronics Class
-class Electronics : public Product {
+class Electronics : public Product
+{
     string model;
     string brand;
     string specs;
@@ -133,7 +146,8 @@ public:
     Electronics(string n, double p, int q, string mod, string br, string sp)
         : Product(n, p, q), model(mod), brand(br), specs(sp) {}
 
-    void print(int productNumber) const override {
+    void print(int productNumber) const override
+    {
         string tempNumber = "[" + to_string(productNumber) + "]";
         int width = 50;
         printDivider(width);
@@ -149,7 +163,8 @@ public:
 };
 
 // Music Class
-class Music : public Product {
+class Music : public Product
+{
     string albumName;
     string artist;
     string genre;
@@ -158,7 +173,8 @@ public:
     Music(string n, double p, int q, string alb, string art, string gen)
         : Product(n, p, q), albumName(alb), artist(art), genre(gen) {}
 
-    void print(int productNumber) const override {
+    void print(int productNumber) const override
+    {
         string tempNumber = "[" + to_string(productNumber) + "]";
         int width = 50;
         printDivider(width);
@@ -174,7 +190,8 @@ public:
 };
 
 // Clothing Class
-class Clothing : public Product {
+class Clothing : public Product
+{
     string color;
     string size;
     string material;
@@ -183,7 +200,8 @@ public:
     Clothing(string n, double p, int q, string col, string sz, string mat)
         : Product(n, p, q), color(col), size(sz), material(mat) {}
 
-    void print(int productNumber) const override {
+    void print(int productNumber) const override
+    {
         string tempNumber = "[" + to_string(productNumber) + "]";
         int width = 50;
         printDivider(width);
