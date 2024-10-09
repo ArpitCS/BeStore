@@ -11,13 +11,6 @@ void printDivider(int width) {
     cout << "+" << string(width, '-') << "+" << endl;
 }
 
-// Helper function to print a formatted line
-void printFormattedLine(const string& label, const string& value, int width) {
-    string line = label + ": " + value;
-    line += string(width - line.length() - 2, ' ');
-    cout << line << endl;
-}
-
 // Base Product Class
 class Product {
 protected:
@@ -46,9 +39,10 @@ public:
         string tempNumber = "[" + to_string(productNumber) + "]";
         int width = 50;
         printDivider(width);
-        printFormattedLine("Product", name, width);
-        printFormattedLine("Price", "$" + to_string(price), width);
-        printFormattedLine("Quantity", to_string(quantity), width);
+        cout << "Product Number: " << tempNumber << endl;
+        cout << "Product: " << name << endl;
+        cout << "Price: $" << price << endl;
+        cout << "Quantity: " << quantity << endl;
         cout << "Amount: " << amt << endl;
         printDivider(width);
     }
@@ -68,13 +62,13 @@ public:
         string tempNumber = "[" + to_string(productNumber) + "]";
         int width = 50;
         printDivider(width);
-        printFormattedLine("Product Number", tempNumber, width);
-        printFormattedLine("Book", name, width);
-        printFormattedLine("Author", author, width);
-        printFormattedLine("Publication Year", publicationYear, width);
-        printFormattedLine("Genre", genre, width);
-        printFormattedLine("Price", "$" + to_string(price), width);
-        printFormattedLine("Quantity", to_string(quantity), width);
+        cout << "Product Number: " << tempNumber << endl;
+        cout << "Book: " << name << endl;
+        cout << "Author: " << author << endl;
+        cout << "Publication Year: " << publicationYear << endl;
+        cout << "Genre: " << genre << endl;
+        cout << "Price: $" << price << endl;
+        cout << "Quantity: " << quantity << endl;
         printDivider(width);
     }
 };
@@ -93,13 +87,13 @@ public:
         string tempNumber = "[" + to_string(productNumber) + "]";
         int width = 50;
         printDivider(width);
-        printFormattedLine("Product Number", tempNumber, width);
-        printFormattedLine("Movie", name, width);
-        printFormattedLine("Director", director, width);
-        printFormattedLine("Release Year", releaseYear, width);
-        printFormattedLine("Rating", rating, width);
-        printFormattedLine("Price", "$" + to_string(price), width);
-        printFormattedLine("Quantity", to_string(quantity), width);
+        cout << "Product Number: " << tempNumber << endl;
+        cout << "Movie: " << name << endl;
+        cout << "Director: " << director << endl;
+        cout << "Release Year: " << releaseYear << endl;
+        cout << "Rating: " << rating << endl;
+        cout << "Price: $" << price << endl;
+        cout << "Quantity: " << quantity << endl;
         printDivider(width);
     }
 };
@@ -118,13 +112,13 @@ public:
         string tempNumber = "[" + to_string(productNumber) + "]";
         int width = 50;
         printDivider(width);
-        printFormattedLine("Product Number", tempNumber, width);
-        printFormattedLine("Software", name, width);
-        printFormattedLine("Version", version, width);
-        printFormattedLine("Platform", platform, width);
-        printFormattedLine("Release Year", releaseYear, width);
-        printFormattedLine("Price", "$" + to_string(price), width);
-        printFormattedLine("Quantity", to_string(quantity), width);
+        cout << "Product Number: " << tempNumber << endl;
+        cout << "Software: " << name << endl;
+        cout << "Version: " << version << endl;
+        cout << "Platform: " << platform << endl;
+        cout << "Release Year: " << releaseYear << endl;
+        cout << "Price: $" << price << endl;
+        cout << "Quantity: " << quantity << endl;
         printDivider(width);
     }
 };
@@ -143,13 +137,13 @@ public:
         string tempNumber = "[" + to_string(productNumber) + "]";
         int width = 50;
         printDivider(width);
-        printFormattedLine("Product Number", tempNumber, width);
-        printFormattedLine("Electronics", name, width);
-        printFormattedLine("Brand", brand, width);
-        printFormattedLine("Model", model, width);
-        printFormattedLine("Specs", specs, width);
-        printFormattedLine("Price", "$" + to_string(price), width);
-        printFormattedLine("Quantity", to_string(quantity), width);
+        cout << " Product Number: " << tempNumber << endl;
+        cout << "Electronics: " << name << endl;
+        cout << "Brand: " << brand << endl;
+        cout << "Model: " << model << endl;
+        cout << "Specs: " << specs << endl;
+        cout << "Price: $" << price << endl;
+        cout << "Quantity: " << quantity << endl;
         printDivider(width);
     }
 };
@@ -168,13 +162,13 @@ public:
         string tempNumber = "[" + to_string(productNumber) + "]";
         int width = 50;
         printDivider(width);
-        printFormattedLine("Product Number", tempNumber, width);
-        printFormattedLine("Music Album", name, width);
-        printFormattedLine("Artist", artist, width);
-        printFormattedLine("Album", albumName, width);
-        printFormattedLine("Genre", genre, width);
-        printFormattedLine("Price", "$" + to_string(price), width);
-        printFormattedLine("Quantity", to_string(quantity), width);
+        cout << "Product Number: " << tempNumber << endl;
+        cout << "Music Album: " << name << endl;
+        cout << "Artist: " << artist << endl;
+        cout << "Album: " << albumName << endl;
+        cout << "Genre: " << genre << endl;
+        cout << "Price: $" << price << endl;
+        cout << "Quantity: " << quantity << endl;
         printDivider(width);
     }
 };
@@ -191,16 +185,15 @@ public:
 
     void print(int productNumber) const override {
         string tempNumber = "[" + to_string(productNumber) + "]";
-
         int width = 50;
         printDivider(width);
-        printFormattedLine("Product Number", tempNumber, width);
-        printFormattedLine("Clothing", name, width);
-        printFormattedLine("Color", color, width);
-        printFormattedLine("Size", size, width);
-        printFormattedLine("Material", material, width);
-        printFormattedLine("Price", "$" + to_string(price), width);
-        printFormattedLine("Quantity", to_string(quantity), width);
+        cout << "Product Number: " << tempNumber << endl;
+        cout << "Clothing: " << name << endl;
+        cout << "Color: " << color << endl;
+        cout << "Size: " << size << endl;
+        cout << "Material: " << material << endl;
+        cout << "Price: $" << price << endl;
+        cout << "Quantity: " << quantity << endl;
         printDivider(width);
     }
 };

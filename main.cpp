@@ -1,6 +1,8 @@
 #include <iostream>
 #include <string>
 #include <fstream>
+#include <ctime>
+#include <cstdlib>
 #include "productClass.h"
 #include "cartClass.h"
 #include "orderClass.h"
@@ -16,6 +18,7 @@ void viewOrderHistory() {
     if (file.is_open()) {
         string line;
         cout << "\n--- Order History ---\n";
+        cout << "Order No.\tDate and Time\tOrder Total\tOrder Items\n";
         while (getline(file, line)) {
             cout << line << endl;
         }
@@ -59,9 +62,21 @@ int main() {
     do {
         // Main menu
         cout << "\n--- Welcome to the Online Store ---\n";
-        cout << "1. Browse Products\n2. View Cart\n3. Checkout\n4. View Order History\n5. Exit\n";
+        cout << "1. Browse Products\n2. View Cart\n3. Checkout\n4. Clear Cart\n5. View Order History\n6. Exit\n";
         cout << "Choose an option: ";
         cin >> choice;
+
+        if (cin.fail()) {
+            cout << "Invalid input. Please enter a number.\n";
+            cin.clear();
+            cin.ignore(10000, '\n');
+            continue;
+        }
+
+        if (choice < 1 || choice > 6) {
+            cout << "Invalid choice. Please choose a number between 1 and 6.\n";
+            continue;
+        }
 
         switch (choice) {
             case 1: {
@@ -75,11 +90,38 @@ int main() {
                 cout << "Enter the product number to add to cart or 0 to go back: ";
                 cin >> prodChoice;
 
-                if (prodChoice > 0 && prodChoice <= PRODUCT_COUNT) {
-                    cout << "Enter quantity: ";
-                    cin >> quantity;
-                    cart.addProduct(products[prodChoice - 1], quantity);
+                if (cin.fail()) {
+                    cout << "Invalid input. Please enter a number.\n";
+                    cin.clear();
+                    cin.ignore(10000, '\n');
+                    break;
                 }
+
+                if (prodChoice < 0 || prodChoice > PRODUCT_COUNT) {
+                    cout << "Invalid product number. Please choose a number between 1 and " << PRODUCT_COUNT << ".\n";
+                    break;
+                }
+
+                if (prodChoice == 0) {
+                    break;
+                }
+
+                cout << "Enter quantity: ";
+                cin >> quantity;
+
+                if (cin.fail()) {
+                    cout << "Invalid input. Please enter a number.\n";
+                    cin.clear();
+                    cin.ignore(10000, '\n');
+                    break;
+                }
+
+                if (quantity <= 0) {
+                    cout << "Invalid quantity. Please enter a number greater than 0.\n";
+                    break;
+                }
+
+                cart.addProduct(products[prodChoice - 1], quantity);
                 break;
             }
 
@@ -96,8 +138,13 @@ int main() {
                 }
 
                 string paymentMethod;
-                cout << "\nChoose payment method (CreditCard/PayPal): ";
+                cout << "\nChoose payment method (Credit Card/PayPal): ";
                 cin >> paymentMethod;
+
+                if (paymentMethod != "CreditCard" && paymentMethod != "PayPal") {
+                    cout << "Invalid payment method. Please choose Credit Card or PayPal.\n";
+                    break;
+                }
 
                 Payment* payment = nullptr;
                 if (paymentMethod == "CreditCard") {
@@ -111,11 +158,23 @@ int main() {
                     // Save order to order_history.csv
                     ofstream file("order_history.csv", ios::app);
                     if (file.is_open()) {
+                        srand(time(0));
+                        int orderNo = rand() % 10000 + 1;
+                        time_t now = time(0);
+                        tm* ltm = localtime(&now);
+                        string date = to_string(1900 + ltm->tm_year) + "-" + to_string(1 + ltm->tm_mon) + "-" + to_string(ltm->tm_mday);
+                        string time = to_string(ltm->tm_hour) + ":" + to_string(ltm->tm_min) + ":" + to_string(ltm->tm_sec);
+                        double orderTotal = 0;
+                        string orderItems;
                         for (int i = 0; i < PRODUCT_COUNT; i++) {
                             if (cart.getQuantity(i) > 0) {
-                                file << products[i]->getName() << "," << cart.getQuantity(i) << "\n";
+                                orderTotal += products[i]->getPrice() * cart.getQuantity(i);
+                                orderItems += products[i]->getName() + " x " + to_string(cart.getQuantity(i)) + ", ";
                             }
                         }
+                        orderItems.pop_back();
+                        orderItems.pop_back();
+                        file << orderNo << "\t" << date << " " << time << "\t" << orderTotal << "\t" << orderItems << "\n";
                         file.close();
                     }
                     delete payment;
@@ -126,18 +185,20 @@ int main() {
             }
 
             case 4:
+                // Clear cart
+                cart.clearCart();
+                break;
+
+            case 5:
                 // View order history
                 viewOrderHistory();
                 break;
 
-            case 5:
+            case 6:
                 cout << "Thank you for shopping!\n";
                 break;
-
-            default:
-                cout << "Invalid choice. Try again.\n";
         }
-    } while (choice != 5);
+    } while (choice != 6);
 
     // Cleanup dynamically allocated memory
     for (int i = 0; i < PRODUCT_COUNT; i++) {

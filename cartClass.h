@@ -1,4 +1,6 @@
-#include <iostream>
+#ifndef CARTCLASS_H
+#define CARTCLASS_H
+
 #include "productClass.h" // Include the Product class header
 #include "paymentClass.h" // Include the Payment class header
 
@@ -51,5 +53,12 @@ public:
         std::cout << "Proceeding to checkout with payment: " << payment << std::endl;
     }
 
-    // Additional functions can be added as needed (e.g., removeItem, clearCart)
+    void clearCart() {
+        itemCount = 0; // Reset itemCount to 0
+        std::cout << "Cart cleared." << std::endl;
+    }
+
+    // Additional functions can be added as needed (e.g., removeItem)
 };
+
+#endif

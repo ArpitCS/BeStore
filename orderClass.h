@@ -1,4 +1,6 @@
-#include <iostream>
+#ifndef ORDERCLASS_H
+#define ORDERCLASS_H
+
 #include "productClass.h" // Include the Product class header
 
 class Order {
@@ -34,3 +36,5 @@ public:
 
     // Additional functions can be added as needed (e.g., removeItem, clearOrder)
 };
+
+ #endif
