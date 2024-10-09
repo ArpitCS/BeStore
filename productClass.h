@@ -41,6 +41,17 @@ public:
             cout << "Insufficient stock." << endl;
         }
     }
+
+    void printCart(int productNumber, int amt) const {
+        string tempNumber = "[" + to_string(productNumber) + "]";
+        int width = 50;
+        printDivider(width);
+        printFormattedLine("Product", name, width);
+        printFormattedLine("Price", "$" + to_string(price), width);
+        printFormattedLine("Quantity", to_string(quantity), width);
+        cout << "Amount: " << amt << endl;
+        printDivider(width);
+    }
 };
 
 // Book Class

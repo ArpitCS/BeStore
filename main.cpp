@@ -108,6 +108,16 @@ int main() {
 
                 if (payment) {
                     cart.checkout(payment);
+                    // Save order to order_history.csv
+                    ofstream file("order_history.csv", ios::app);
+                    if (file.is_open()) {
+                        for (int i = 0; i < PRODUCT_COUNT; i++) {
+                            if (cart.getQuantity(i) > 0) {
+                                file << products[i]->getName() << "," << cart.getQuantity(i) << "\n";
+                            }
+                        }
+                        file.close();
+                    }
                     delete payment;
                 } else {
                     cout << "Invalid payment method selected.\n";

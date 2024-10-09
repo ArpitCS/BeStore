@@ -4,11 +4,20 @@
 
 class Cart {
 private:
-    Product* cartItems[10]; // Fixed size array for cart items
+    Product* cartItems[100]; // Fixed size array for cart items
+    int quantities[100]; // Array to store quantities of each product
     int itemCount; // To keep track of how many items are in the cart
 
 public:
     Cart() : itemCount(0) {} // Initialize itemCount to 0
+
+    int getQuantity(int index) const {
+        if (index >= 0 && index < itemCount) {
+            return cartItems[index]->getQuantity();
+        } else {
+            return 0;
+        }
+    }
 
     void displayCart() const {
         if (itemCount == 0) { // Check if the cart is empty
@@ -17,13 +26,16 @@ public:
         }
 
         for (int i = 0; i < itemCount; ++i) { // Use itemCount instead of cartItems.size()
-            cartItems[i]->print(i); // Pass the index to print()
+            int qt = quantities[i];
+            cartItems[i]->printCart(i, qt); // Pass the index to print()
         }
     }
 
     void addProduct(Product* product, int quantity) {
-        if (itemCount < 10) {
+        if (itemCount < 100) {
+            quantities[itemCount] = quantity; // Set quantity
             cartItems[itemCount++] = product; // Add product and increment count
+
             std::cout << "Added " << quantity << " of product " << product->getName() << " to cart." << std::endl;
         } else {
             std::cout << "Cart is full!" << std::endl;
