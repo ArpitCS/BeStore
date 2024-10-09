@@ -42,10 +42,8 @@ public:
 
     void printCart(int productNumber, int amt) const
     {
-        string tempNumber = "[" + to_string(productNumber) + "]";
         int width = 50;
         printDivider(width);
-        cout << "Product Number: " << tempNumber << endl;
         cout << "Product: " << name << endl;
         cout << "Price: $" << price << endl;
         cout << "Quantity: " << quantity << endl;
